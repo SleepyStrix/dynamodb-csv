@@ -34,16 +34,22 @@ function convertDynamodbToCsv(inputText, callback) {
 	//console.log(inputText);
 	var input = JSON.parse(inputText);
 	//console.log(input);
-	var numberOfColumns = Object.keys(input[0]).length;
-	console.log(numberOfColumns + " columns detected");
+	var numberOfColumns = 0;
 	var rows = [];
 
 	//build column headers
 	var column_headers = [];
-	Object.keys(input[0]).forEach(function (key, index) {
-		//console.log(key);
-		column_headers.push(key);
-	});
+	for (let j = 0; j < input.length; j++) {
+		Object.keys(input[j]).forEach(function (key, index) {
+			if (column_headers.indexOf(key) === -1) {
+				//console.log(key);
+				numberOfColumns++;
+				column_headers.push(key);
+			}
+			//console.log(key);
+		});
+	}
+	console.log(numberOfColumns + " columns detected");
 	var column_headers_csv = column_headers.join(",");
 	console.log(column_headers_csv);
 	rows.push(column_headers_csv);

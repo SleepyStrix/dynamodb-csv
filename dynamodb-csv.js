@@ -1,9 +1,14 @@
 var fs = require('fs');
-var dyncsv = require('dynamodb-csv');
+//var dyncsv = require('dynamodb-csv');
+var dyncsv = require('./index.js');
+if (!dyncsv) {
+	dyncsv = require('dynamodb-csv');
+}
 
 var output_type = process.argv[2];
 var inputPath = process.argv[3];
 var outputPath = process.argv[4];
+var columns = process.argv[5];
 
 if (output_type == "csv") {
 	var inputText = fs.readFileSync(inputPath, 'ascii');
